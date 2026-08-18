@@ -104,3 +104,15 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# This repository stores the Unity project in the CollectingRobot subfolder.
+# Keep its generated folders out of version control as well.
+/CollectingRobot/[Ll]ibrary/
+/CollectingRobot/[Tt]emp/
+/CollectingRobot/[Oo]bj/
+/CollectingRobot/[Bb]uild/
+/CollectingRobot/[Bb]uilds/
+/CollectingRobot/[Ll]ogs/
+/CollectingRobot/[Uu]ser[Ss]ettings/
+/CollectingRobot/[Mm]emoryCaptures/
+/CollectingRobot/[Rr]ecordings/
