@@ -14,16 +14,24 @@ namespace _01.Scripts.Player
         
         
         //components
-        private PlayerMover _mover;
-        private InputReader _inputReader;
+        [SerializeField] private PlayerMover mover;
+        [SerializeField] private InputReader inputReader;
         public Rigidbody2D Rb { get; private set; }
+
+        private void Reset()
+        {
+            mover = GetComponentInChildren<PlayerMover>();
+            inputReader = GetComponentInChildren<InputReader>();
+            
+        }
 
         private void Awake()
         {
             Rb = GetComponent<Rigidbody2D>();
-            _mover = GetComponentInChildren<PlayerMover>();
-            _inputReader = GetComponentInChildren<InputReader>();
-            
+            mover.Initialize(this);
+            inputReader.OnMovePressed += SetMoveDirection;
         }
+
+        private void SetMoveDirection(float obj) => mover.Move(obj);
     }
 }

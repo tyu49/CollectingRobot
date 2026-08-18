@@ -30,7 +30,6 @@ namespace _01.Scripts.Player.Components
         public void OnMove(InputAction.CallbackContext context)
         {
             OnMovePressed?.Invoke(context.ReadValue<float>());
-            Debug.Log(context);
         }
 
         public void OnLook(InputAction.CallbackContext context)

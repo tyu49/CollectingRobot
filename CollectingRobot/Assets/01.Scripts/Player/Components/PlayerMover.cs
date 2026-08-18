@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace _01.Scripts.Player.Components
 {
@@ -10,6 +11,8 @@ namespace _01.Scripts.Player.Components
         private float JumpForce => _player.JumpForce;
         private Rigidbody2D Rb => _player.Rb;
 
+        private float _direction;
+        
         public void Initialize(Player player)
         {
             _player = player;
@@ -17,8 +20,13 @@ namespace _01.Scripts.Player.Components
 
         public void Move(float direction)
         {
-            
+            _direction = direction;
         }
-        
+
+
+        private void FixedUpdate()
+        {
+            Rb.linearVelocityX = _direction * Speed;
+        }
     }
 }
