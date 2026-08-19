@@ -15,9 +15,13 @@ namespace _01.Scripts.Pooling
         private void Awake()
         {
             if (Instance != null && Instance != this)
+            {
                 Destroy(gameObject);
+                return;
+            }
             if (Instance == null)
                 Instance = this;
+            _poolingDic = new Dictionary<PoolItemSO, Stack<GameObject>>();
         }
 
         private void OnDestroy()
@@ -30,6 +34,11 @@ namespace _01.Scripts.Pooling
 
         private void Start()
         {
+            if (poolingList == null)
+            {
+                Debug.LogError("There's no PoolingList in PoolManager");
+                return;
+            }
             foreach (var item in poolingList.List)
             {
                 Stack<GameObject> stack = new Stack<GameObject>();
