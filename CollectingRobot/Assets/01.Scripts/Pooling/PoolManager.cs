@@ -54,6 +54,16 @@ namespace _01.Scripts.Pooling
 
         public PoolableItemAbstract Pop(Vector3 position, PoolItemSO request)
         {
+            if (_poolingDic[request].Count <= 0)
+            {
+                for (int i = 0; i < request.Count; i++)
+                {
+                    GameObject additionalGo = Instantiate(request.Item, transform);
+                    additionalGo.SetActive(false);
+                    _poolingDic[request].Push(additionalGo);
+                }
+                _poolingDic.Add(request, _poolingDic[request]);
+            }
             GameObject go = _poolingDic[request].Pop();
             go.SetActive(true);
             PoolableItemAbstract pool = go.GetComponent<PoolableItemAbstract>();

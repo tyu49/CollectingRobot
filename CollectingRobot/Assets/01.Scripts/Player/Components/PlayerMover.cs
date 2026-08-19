@@ -12,6 +12,7 @@ namespace _01.Scripts.Player.Components
         [SerializeField]private float jetPackPowerLimit;
         [SerializeField]private float jetPackBattery;
         [SerializeField] private ParticleSystem jetPackEffect;
+        [SerializeField] private ParticleSystem movingDustEffect;
         private Rigidbody2D _rb;
 
         private float _direction;
@@ -47,6 +48,19 @@ namespace _01.Scripts.Player.Components
                     _rb.linearVelocityY = jetPackPowerLimit;
                 if(jetPackBattery <= 0)
                     jetPackEffect.Stop();
+            }
+
+            if (!_player.IsOnGround && movingDustEffect.isPlaying)
+            {
+                movingDustEffect.Stop();
+            }
+            else if (_player.IsOnGround && _direction != 0 && !movingDustEffect.isPlaying)
+            {
+                movingDustEffect.Play();
+            }
+            else if (_direction == 0 && movingDustEffect.isPlaying)
+            {
+                movingDustEffect.Stop();
             }
         }
 

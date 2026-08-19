@@ -1,5 +1,6 @@
 ﻿using System;
 using _01.Scripts.Player.Components;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace _01.Scripts.Player
@@ -14,10 +15,12 @@ namespace _01.Scripts.Player
         [SerializeField] private PlayerInteractor interactor;
         [SerializeField] private PlayerBattery battery;
         [SerializeField] private PlayerVisual visual;
+        [SerializeField] private PlayerGroundChecker groundChecker;
 
         public event Action OnEnterBase;
         public event Action OnExitBase;
         private float _movingDirection;
+        public bool IsOnGround { get; private set; }
 
         private void FixedUpdate()
         {
@@ -26,6 +29,7 @@ namespace _01.Scripts.Player
                 transform.rotation = new Quaternion(0, _movingDirection == 1 ? 0 : 180, 0, 0);
             }
             visual.MovingAnimation(_movingDirection);
+            IsOnGround = groundChecker.Check();
         }
 
 
@@ -36,6 +40,7 @@ namespace _01.Scripts.Player
             interactor = GetComponentInChildren<PlayerInteractor>();
             battery = GetComponentInChildren<PlayerBattery>();
             visual = GetComponentInChildren<PlayerVisual>();
+            groundChecker = GetComponentInChildren<PlayerGroundChecker>();
             
         }
 
@@ -45,6 +50,7 @@ namespace _01.Scripts.Player
             interactor.Initialize(this);
             battery.Initialize(this);
             visual.Initialize(this, transform);
+            groundChecker.Initialize(this);
             inputReader.OnMovePressed += SetMoveDirection;
             inputReader.OnJumpPressed += SetJetPackState;
             inputReader.OnInteractPressed += Interact;
