@@ -8,20 +8,19 @@ namespace _01.Scripts.Interactable
 {
     public abstract class InteractableAbstract : MonoBehaviour
     {
-        [SerializeField] private PoolItemSO interactableUI;
 
         private PoolableItemAbstract _currentUI;
+        protected Player.Player Player;
         public virtual void Interact(Player.Player owner)
         {
+            Player = owner;
         }
 
         public virtual void EnableInteractableUI()
         {
-            _currentUI = PoolManager.Instance.Pop(transform.position, interactableUI).GetComponent<PoolableItemAbstract>();
         }
         public virtual void DisableInteractableUI()
         {
-            _currentUI.Push();
         }
     }
 }
