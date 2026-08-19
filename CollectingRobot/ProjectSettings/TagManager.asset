@@ -14,8 +14,8 @@ TagManager:
   - Ground
   - Background
   - Player
-  - Item
-  - 
+  - DroppedItem
+  - Interactable
   - 
   - 
   - 
@@ -52,6 +52,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 4222551123
+    locked: 0
+  - name: Particle
+    uniqueID: 4130495073
     locked: 0
   m_RenderingLayers:
   - Default

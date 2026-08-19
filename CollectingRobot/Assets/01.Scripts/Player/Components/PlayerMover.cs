@@ -11,6 +11,7 @@ namespace _01.Scripts.Player.Components
         [SerializeField]private float jetPackPower;
         [SerializeField]private float jetPackPowerLimit;
         [SerializeField]private float jetPackBattery;
+        [SerializeField] private ParticleSystem jetPackEffect;
         private Rigidbody2D _rb;
 
         private float _direction;
@@ -29,6 +30,10 @@ namespace _01.Scripts.Player.Components
         public void SetJetPackState(bool state)
         {
             _jetPackState = state;
+            if(state && jetPackBattery > 0)
+                jetPackEffect.Play();
+            else
+                jetPackEffect.Stop();
         }
 
         private void FixedUpdate()
@@ -40,6 +45,8 @@ namespace _01.Scripts.Player.Components
                 jetPackBattery -= Time.fixedDeltaTime;
                 if (_rb.linearVelocityY >= jetPackPowerLimit)
                     _rb.linearVelocityY = jetPackPowerLimit;
+                if(jetPackBattery <= 0)
+                    jetPackEffect.Stop();
             }
         }
 
