@@ -7,26 +7,40 @@ namespace _01.Scripts.Player.Components
     {
         private Player _player;
 
-        private float Speed => _player.Speed;
-        private float JumpForce => _player.JumpForce;
-        private Rigidbody2D Rb => _player.Rb;
+        [SerializeField]private float speed;
+        [SerializeField]private float jetPackPower;
+        [SerializeField]private float jetPackPowerLimit;
+        [SerializeField]private float jetPackBattery;
+        private Rigidbody2D _rb;
 
         private float _direction;
+        private bool _jetPackState;
         
         public void Initialize(Player player)
         {
             _player = player;
+            _rb = GetComponentInParent<Rigidbody2D>();
         }
 
-        public void Move(float direction)
+        public void SetMovement(float direction)
         {
             _direction = direction;
         }
-
+        public void SetJetPackState(bool state)
+        {
+            _jetPackState = state;
+        }
 
         private void FixedUpdate()
         {
-            Rb.linearVelocityX = _direction * Speed;
+            _rb.linearVelocityX = _direction * speed;
+            if (_jetPackState && jetPackBattery > 0)
+            {
+                _rb.AddForceY(jetPackPower, ForceMode2D.Force);
+                jetPackBattery -= Time.fixedDeltaTime;
+                if (_rb.linearVelocityY >= jetPackPowerLimit)
+                    _rb.linearVelocityY = jetPackPowerLimit;
+            }
         }
     }
 }

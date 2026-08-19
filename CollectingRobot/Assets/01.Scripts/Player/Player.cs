@@ -8,30 +8,33 @@ namespace _01.Scripts.Player
     [RequireComponent(typeof(BoxCollider2D))]
     public class Player : MonoBehaviour
     {
-        //value
-        [field : SerializeField] public float Speed { get; private set; }
-        [field: SerializeField] public float JumpForce { get; private set; }
-        
-        
         //components
         [SerializeField] private PlayerMover mover;
         [SerializeField] private InputReader inputReader;
-        public Rigidbody2D Rb { get; private set; }
-
+        [SerializeField] private PlayerInteractor interactor;
         private void Reset()
         {
             mover = GetComponentInChildren<PlayerMover>();
             inputReader = GetComponentInChildren<InputReader>();
+            interactor = GetComponentInChildren<PlayerInteractor>();
             
         }
 
         private void Awake()
         {
-            Rb = GetComponent<Rigidbody2D>();
             mover.Initialize(this);
+            interactor.Initialize(this);
             inputReader.OnMovePressed += SetMoveDirection;
+            inputReader.OnJumpPressed += SetJetPackState;
         }
 
-        private void SetMoveDirection(float obj) => mover.Move(obj);
+        private void OnDestroy()
+        {
+            inputReader.OnMovePressed -= SetMoveDirection;
+            inputReader.OnJumpPressed -= SetJetPackState;
+        }
+
+        private void SetMoveDirection(float obj) => mover.SetMovement(obj);
+        private void SetJetPackState(bool obj) => mover.SetJetPackState(obj);
     }
 }
