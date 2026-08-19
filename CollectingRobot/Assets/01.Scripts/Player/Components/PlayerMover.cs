@@ -42,5 +42,10 @@ namespace _01.Scripts.Player.Components
                     _rb.linearVelocityY = jetPackPowerLimit;
             }
         }
+
+        private void EnterBase()
+        {
+            
+        }
     }
 }

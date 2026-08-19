@@ -13,7 +13,7 @@ namespace _01.Scripts.SO
 
         private void OnValidate()
         {
-            if (!Item.TryGetComponent<IPoolableItem>(out var item) && Item != null)
+            if (!Item.TryGetComponent<PoolableItemAbstract>(out var item) && Item != null)
                 Item = null;
         }
     }

@@ -12,11 +12,14 @@ namespace _01.Scripts.Player
         [SerializeField] private PlayerMover mover;
         [SerializeField] private InputReader inputReader;
         [SerializeField] private PlayerInteractor interactor;
+        [SerializeField] private PlayerBattery battery;
+        
         private void Reset()
         {
             mover = GetComponentInChildren<PlayerMover>();
             inputReader = GetComponentInChildren<InputReader>();
             interactor = GetComponentInChildren<PlayerInteractor>();
+            battery = GetComponentInChildren<PlayerBattery>();
             
         }
 

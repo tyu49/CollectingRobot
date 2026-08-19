@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
-using Vector3 = System.Numerics.Vector3;
 
 namespace _01.Scripts.Pooling
 {
-    public class InteractableUI : MonoBehaviour, IPoolableItem
+    public class InteractableUI : PoolableItemAbstract
     {
         [SerializeField] private float height;
         
-        public void Pop(Vector3 position)
+        public override void Pop(Vector3 position)
         {
-            transform.position = new UnityEngine.Vector3(position.X, position.Y + height, position.Z);
+            transform.position = new UnityEngine.Vector3(position.x, position.y + height, position.z);
         }
 
-        public void Push()
+        public override void Push()
         {
+            PoolManager.Instance.Push(this);
         }
         
         

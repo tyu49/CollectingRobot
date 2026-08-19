@@ -42,8 +42,6 @@ namespace _01.Scripts.Pooling
             foreach (var item in poolingList.List)
             {
                 Stack<GameObject> stack = new Stack<GameObject>();
-                if (!_poolingDic.TryGetValue(item, out stack))
-                {
                     for (int i = 0; i < item.Count; i++)
                     {
                         GameObject go = Instantiate(item.Item, transform);
@@ -51,8 +49,23 @@ namespace _01.Scripts.Pooling
                         stack.Push(go);
                     }
                     _poolingDic.Add(item, stack);
-                }
             }
+        }
+
+        public PoolableItemAbstract Pop(Vector3 position, PoolItemSO request)
+        {
+            GameObject go = _poolingDic[request].Pop();
+            go.SetActive(true);
+            PoolableItemAbstract pool = go.GetComponent<PoolableItemAbstract>();
+            pool.Pop(position);
+            return pool;
+        }
+
+
+        public void Push(PoolableItemAbstract item)
+        {
+            item.gameObject.SetActive(false);
+            _poolingDic[item.Item].Push(item.gameObject);
         }
     }
 }
