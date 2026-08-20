@@ -16,7 +16,8 @@ namespace _01.Scripts.SO
     public enum HeadPartType
     {
         None = 0,
-        NightVision = 1 << 0,
-        
+        NightVision = 1 << 0, // 어두운 곳 밝힘
+        Light = 1<<1, //경량형
+        Hard = 1<<2, //중량형
     }
 }
