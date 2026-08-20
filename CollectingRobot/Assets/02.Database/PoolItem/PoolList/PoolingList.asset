@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.SO.PoolingListSO
   <List>k__BackingField:
   - {fileID: 11400000, guid: cb70bcf2978f4794381f26f2954f7465, type: 2}
+  - {fileID: 11400000, guid: 685ac567651200f43b37721916aa7fe3, type: 2}

@@ -11,6 +11,7 @@ namespace _01.Scripts.Player.Components
         [SerializeField]private float jetPackPower;
         [SerializeField]private float jetPackPowerLimit;
         [SerializeField]private float jetPackBattery;
+        [SerializeField]private float jetPackMaxBattery;
         [SerializeField] private ParticleSystem jetPackEffect;
         [SerializeField] private ParticleSystem movingDustEffect;
         private Rigidbody2D _rb;
@@ -35,6 +36,11 @@ namespace _01.Scripts.Player.Components
                 jetPackEffect.Play();
             else
                 jetPackEffect.Stop();
+        }
+
+        public void ShootPlayer(float power, Vector2 direction, ForceMode2D type)
+        {
+            _rb.AddForce(power*direction.normalized, type);
         }
 
         private void FixedUpdate()
@@ -66,7 +72,7 @@ namespace _01.Scripts.Player.Components
 
         private void EnterBase()
         {
-            
+            jetPackBattery = jetPackMaxBattery;
         }
     }
 }

@@ -4884,6 +4884,7 @@ MonoBehaviour:
   jetPackPower: 15
   jetPackPowerLimit: 10
   jetPackBattery: 3
+  jetPackMaxBattery: 0
   jetPackEffect: {fileID: 2978309620490099840}
   movingDustEffect: {fileID: 3401569235137127942}
 --- !u!1 &2811194855537802284
@@ -4948,7 +4949,7 @@ GameObject:
   - component: {fileID: 863808126470765981}
   - component: {fileID: 4835502808264916145}
   - component: {fileID: 5836151055950409121}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4974,6 +4975,7 @@ Transform:
   - {fileID: 2861143250786280969}
   - {fileID: 6218150625356423175}
   - {fileID: 4443733095943944041}
+  - {fileID: 5789648149369809324}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &863808126470765981
@@ -4988,12 +4990,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899c743a86774924bb29e6604864f534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.Player.Player
-  mover: {fileID: 1448262192931557081}
   inputReader: {fileID: 5402369287037229125}
   interactor: {fileID: 5988131296342480628}
   battery: {fileID: 563948190445619095}
   visual: {fileID: 6691871768874043073}
   groundChecker: {fileID: 5308225468752904949}
+  <Mover>k__BackingField: {fileID: 0}
+  <TrashInventory>k__BackingField: {fileID: 4840054910039796670}
 --- !u!50 &4835502808264916145
 Rigidbody2D:
   serializedVersion: 5
@@ -5017,7 +5020,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -5055,7 +5058,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.012868941}
+  m_Offset: {x: 0, y: -0.0025157332}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5065,8 +5068,54 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1.4858307}
+  m_Size: {x: 1, y: 1.4651242}
   m_EdgeRadius: 0
+--- !u!1 &3979540560730834896
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5789648149369809324}
+  - component: {fileID: 4840054910039796670}
+  m_Layer: 0
+  m_Name: TrashInventory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5789648149369809324
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3979540560730834896}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4837571367960678668}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4840054910039796670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3979540560730834896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5feb75942291493eb6e5deeee07e45b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_01.Scripts.Player.Components.PlayerTrashInventory
+  maxCapacity: 10
+  <CurrentCapacity>k__BackingField: 0
 --- !u!1 &4786669860050813012
 GameObject:
   m_ObjectHideFlags: 0
@@ -5245,8 +5294,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -72416173
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4017722839448368722, guid: 2b9c66efb1abacb4798ca21f89d1b663, type: 3}

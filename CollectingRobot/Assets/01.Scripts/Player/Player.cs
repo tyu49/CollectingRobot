@@ -10,13 +10,16 @@ namespace _01.Scripts.Player
     public class Player : MonoBehaviour
     {
         //components
-        [SerializeField] private PlayerMover mover;
         [SerializeField] private InputReader inputReader;
         [SerializeField] private PlayerInteractor interactor;
         [SerializeField] private PlayerBattery battery;
         [SerializeField] private PlayerVisual visual;
         [SerializeField] private PlayerGroundChecker groundChecker;
 
+        
+        
+        [field : SerializeField] public PlayerMover Mover{ get; private set; }
+        [field : SerializeField] public PlayerTrashInventory TrashInventory { get; private set; }
         public event Action OnEnterBase;
         public event Action OnExitBase;
         private float _movingDirection;
@@ -35,22 +38,24 @@ namespace _01.Scripts.Player
 
         private void Reset()
         {
-            mover = GetComponentInChildren<PlayerMover>();
+            Mover = GetComponentInChildren<PlayerMover>();
             inputReader = GetComponentInChildren<InputReader>();
             interactor = GetComponentInChildren<PlayerInteractor>();
             battery = GetComponentInChildren<PlayerBattery>();
             visual = GetComponentInChildren<PlayerVisual>();
             groundChecker = GetComponentInChildren<PlayerGroundChecker>();
+            TrashInventory = GetComponentInChildren<PlayerTrashInventory>();
             
         }
 
         private void Awake()
         {
-            mover.Initialize(this);
+            Mover.Initialize(this);
             interactor.Initialize(this);
             battery.Initialize(this);
             visual.Initialize(this, transform);
             groundChecker.Initialize(this);
+            TrashInventory.Initialize(this);
             inputReader.OnMovePressed += SetMoveDirection;
             inputReader.OnJumpPressed += SetJetPackState;
             inputReader.OnInteractPressed += Interact;
@@ -66,9 +71,9 @@ namespace _01.Scripts.Player
         private void SetMoveDirection(float obj)
         {
             _movingDirection = obj;
-            mover.SetMovement(obj);   
+            Mover.SetMovement(obj);   
         }
-        private void SetJetPackState(bool obj) => mover.SetJetPackState(obj);
+        private void SetJetPackState(bool obj) => Mover.SetJetPackState(obj);
         private void Interact() => interactor.TryInteract();
 
         public void EnterBase()

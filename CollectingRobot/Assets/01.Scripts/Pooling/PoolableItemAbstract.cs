@@ -8,6 +8,10 @@ namespace _01.Scripts.Pooling
     {
         [field : SerializeField] public PoolItemSO Item { get; private set; }
         public abstract void Pop(Vector3 position);
-        public abstract void Push();
+
+        public virtual void Push()
+        {
+            PoolManager.Instance.Push(this);
+        }
     }
 }

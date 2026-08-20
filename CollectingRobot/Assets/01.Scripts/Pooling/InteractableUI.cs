@@ -13,7 +13,7 @@ namespace _01.Scripts.Pooling
 
         public override void Push()
         {
-            PoolManager.Instance.Push(this);
+            base.Push();
         }
         
         
