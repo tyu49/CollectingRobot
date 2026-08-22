@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using _01.Scripts.SO;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,11 +14,23 @@ namespace _01.Scripts.UI
         [SerializeField] private CanvasGroup group;
         [SerializeField] private float appearingDelay;
         [SerializeField] private float appearingTime;
+        [SerializeField] private List<PartSelector> selectors;
+        [SerializeField] private List<PlayerPartSO> partDataList;
 
         private WaitForSeconds AppearingDelay => new WaitForSeconds(appearingDelay);
         private bool _isOn;
         public void ShowList() => StartCoroutine(ShowListCo());
         public void DisableList() => StartCoroutine(DisableListCo());
+
+        private void Awake()
+        {
+            int index = 0;
+            foreach (var data in partDataList)
+            {
+                selectors[index].Initialize(data);
+                index++;
+            }
+        }
 
         private IEnumerator DisableListCo()
         {

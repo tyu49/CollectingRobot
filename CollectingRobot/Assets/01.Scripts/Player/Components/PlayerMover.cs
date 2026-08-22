@@ -40,7 +40,7 @@ namespace _01.Scripts.Player.Components
         public void SetJetPackState(bool state)
         {
             _jetPackState = state;
-            if(state && JetPackBattery > 0)
+            if(state && (JetPackBattery > 0 || _player.PartType.HasFlag(PartType.BatteryRecycle)))
                 jetPackEffect.Play();
             else
                 jetPackEffect.Stop();
@@ -60,13 +60,12 @@ namespace _01.Scripts.Player.Components
                 JetPackBattery -= Time.fixedDeltaTime;
                 if (_rb.linearVelocityY >= jetPackPowerLimit)
                     _rb.linearVelocityY = jetPackPowerLimit;
-                if(JetPackBattery <= 0 && jetPackEffect.isPlaying == true)
+                if(JetPackBattery <= 0 && !_player.PartType.HasFlag(PartType.BatteryRecycle))
                     jetPackEffect.Stop();
             }
-            if (JetPackBattery <= 0 && _player.PartType.HasFlag(PartType.BatteryRecycle))
+            else if (JetPackBattery <= 0 && _player.PartType.HasFlag(PartType.BatteryRecycle) && _jetPackState)
             {
-                jetPackEffect.Play();
-                _player.UseBattery(Time.fixedDeltaTime);
+                _player.UseBattery(Time.fixedDeltaTime * 5);
                 _rb.AddForceY(jetPackPower, ForceMode2D.Force);
                 if (_rb.linearVelocityY >= jetPackPowerLimit)
                     _rb.linearVelocityY = jetPackPowerLimit;
@@ -89,6 +88,8 @@ namespace _01.Scripts.Player.Components
         private void ExitBase()
         {
             JetPackBattery = JetPackMaxBattery;
+            if(_jetPackState)
+                jetPackEffect.Play();
         }
     }
 }

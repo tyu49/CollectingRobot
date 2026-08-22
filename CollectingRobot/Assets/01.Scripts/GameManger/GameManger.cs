@@ -14,6 +14,8 @@ namespace _01.Scripts.GameManger
         [SerializeField] private TrashHolder trash;
         [field:SerializeField] public Vector3 LostThingPos { get; private set; }
 
+        public event Action OnBaseCanvasOn;
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -44,5 +46,7 @@ namespace _01.Scripts.GameManger
         {
             LostThingPos = pos;
         }
+
+        public void EnterBase() => OnBaseCanvasOn?.Invoke();
     }
 }

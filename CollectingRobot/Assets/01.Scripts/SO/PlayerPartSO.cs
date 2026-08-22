@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _01.Scripts.SO
 {
-    [CreateAssetMenu(fileName = "bodyPart", menuName = "Part/body", order = 0)]
+    [CreateAssetMenu(fileName = "Part", menuName = "Part", order = 0)]
     public class PlayerPartSO : ScriptableObject
     {
         [field:SerializeField] public string Name { get; private set; }

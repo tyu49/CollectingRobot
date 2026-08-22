@@ -23,6 +23,7 @@ namespace _01.Scripts.Interactable
             _isEnter = true;
             baseCanvas.enabled = true;
             nonBaseCanvas.enabled = false;
+            GameManger.GameManger.Instance.EnterBase();
         }
 
         public void ExitBase()
