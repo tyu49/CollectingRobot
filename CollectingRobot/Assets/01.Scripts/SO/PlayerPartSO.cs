@@ -7,6 +7,7 @@ namespace _01.Scripts.SO
     public class PlayerPartSO : ScriptableObject
     {
         [field:SerializeField] public string Name { get; private set; }
+        [field:SerializeField, TextArea(6,20)] public string Description { get; private set; }
         [field:SerializeField] public int RequiringTrash { get; private set; }
         [field:SerializeField] public float PlusSpeed { get; private set; }
         [field:SerializeField] public float PlusJetpack { get; private set; }

@@ -12,7 +12,9 @@ namespace _01.Scripts.GameManger
         
         [SerializeField] private GameStarter starter;
         [SerializeField] private TrashHolder trash;
+        [field : SerializeField] public PartManager Part { get; private set; }
         [field:SerializeField] public Vector3 LostThingPos { get; private set; }
+        public int CurrentTrashes => trash.HavingTrashes;
 
         public event Action OnBaseCanvasOn;
 
@@ -22,6 +24,7 @@ namespace _01.Scripts.GameManger
                 Destroy(gameObject);
             if (Instance == null)
                 Instance = this;
+            Part.Initialize(this);
         }
 
         private void OnDestroy()
@@ -36,6 +39,7 @@ namespace _01.Scripts.GameManger
         }
 
         public void GetTrashes(int value) => trash.GetTrashes(value);
+        public void UseTrashed(int value) => trash.UseTrash(value);
 
         public void LandedOnGround()
         {

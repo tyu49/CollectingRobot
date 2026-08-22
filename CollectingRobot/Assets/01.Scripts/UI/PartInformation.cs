@@ -13,9 +13,13 @@ namespace _01.Scripts.UI
         [SerializeField] private CanvasGroup group;
         [SerializeField] private TextMeshProUGUI title;
         [SerializeField] private TextMeshProUGUI main;
+        [SerializeField] private TextMeshProUGUI button;
         [SerializeField] private float showingDelay;
         [SerializeField] private float typeTime;
 
+        private int _currentState; //0 = 제작, 1 = 장착, 2 = 해제
+        private PartSelector _currentData;
+        
         private void Start()
         {
             GameManger.GameManger.Instance.OnBaseCanvasOn += StartAnimation;
@@ -32,10 +36,42 @@ namespace _01.Scripts.UI
             underBorder.sizeDelta = new Vector2(15f, 0f);
             upperBorder.DOSizeDelta(new Vector2(500f, 25f), showingDelay).SetEase(Ease.OutExpo);
             underBorder.DOSizeDelta(new Vector2(15f,615f), showingDelay).SetEase(Ease.OutExpo);
-            title.SetText(string.Empty);
-            main.SetText(string.Empty);
             title.DOTypeText("None", typeTime,Ease.OutQuad);
-            main.DOTypeText("대충 아무말이나 적는 중인데 이거 이렇게 해도 되는거 맞겠죠? 그렇겠죠?", typeTime,Ease.OutQuad);
+            main.DOTypeText("None", typeTime,Ease.OutQuad);
+            button.DOTypeText("Error", typeTime, Ease.OutQuad);
+            
+        }
+
+        public void SetData(PartSelector data)
+        {
+            _currentData = data;
+            title.DOTypeText(data.MyData.Name, typeTime,Ease.OutQuad);
+            main.DOTypeText(data.MyData.Description, typeTime,Ease.OutQuad);
+            switch (_currentState)
+            {
+                case 0:
+                    button.DOTypeText("제작", typeTime, Ease.OutQuad);
+                    break;
+                case 1:
+                    button.DOTypeText("장착", typeTime, Ease.OutQuad);
+                    break;
+                case 2:
+                    button.DOTypeText("해제", typeTime, Ease.OutQuad);
+                    break;
+            }
+        }
+
+        public void Button()
+        {
+            switch (_currentState)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
         }
         
         

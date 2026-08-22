@@ -10,11 +10,11 @@ namespace _01.Scripts.Player
     public class Player : MonoBehaviour
     {
         //partsValue
-        public float PartSpeed => partManager.PlusSpeed;
-        public float PartJetPack => partManager.PlusJetPackGage;
-        public float PartBattery => partManager.PlusBattery;
-        public float PartInventory => partManager.PlusInventoryScale;
-        public PartType PartType => partManager.EquippedType;
+        public float PartSpeed => PartManager.PlusSpeed;
+        public float PartJetPack => PartManager.PlusJetPackGage;
+        public float PartBattery => PartManager.PlusBattery;
+        public float PartInventory => PartManager.PlusInventoryScale;
+        public PartType PartType => PartManager.EquippedType;
         
         //components
         [SerializeField] private InputReader inputReader;
@@ -22,14 +22,11 @@ namespace _01.Scripts.Player
         [SerializeField] private PlayerBattery battery;
         [SerializeField] private PlayerVisual visual;
         [SerializeField] private PlayerGroundChecker groundChecker;
-        [SerializeField] private PlayerPartManager partManager;
-
-        
-        
+        [field : SerializeField] public PlayerPartManager PartManager { get; private set; }
         [field : SerializeField] public PlayerMover Mover{ get; private set; }
         [field : SerializeField] public PlayerTrashInventory TrashInventory { get; private set; }
-        
-        
+
+        public static Player Instance { get; private set; }
         public event Action OnEnterBase;
         public event Action OnExitBase;
         private float _movingDirection;
@@ -56,7 +53,7 @@ namespace _01.Scripts.Player
             visual = GetComponentInChildren<PlayerVisual>();
             groundChecker = GetComponentInChildren<PlayerGroundChecker>();
             TrashInventory = GetComponentInChildren<PlayerTrashInventory>();
-            partManager = GetComponentInChildren<PlayerPartManager>();
+            PartManager = GetComponentInChildren<PlayerPartManager>();
             
         }
 
@@ -71,6 +68,10 @@ namespace _01.Scripts.Player
             inputReader.OnMovePressed += SetMoveDirection;
             inputReader.OnJumpPressed += SetJetPackState;
             inputReader.OnInteractPressed += Interact;
+            if (Instance != null && Instance != this)
+                Destroy(gameObject);
+            if (Instance == null)
+                Instance = this;
         }
 
         private void OnDestroy()
@@ -78,6 +79,8 @@ namespace _01.Scripts.Player
             inputReader.OnMovePressed -= SetMoveDirection;
             inputReader.OnJumpPressed -= SetJetPackState;
             inputReader.OnInteractPressed -= Interact;
+            if (Instance != null && Instance == this)
+                Destroy(gameObject);
         }
 
         private void SetMoveDirection(float obj)

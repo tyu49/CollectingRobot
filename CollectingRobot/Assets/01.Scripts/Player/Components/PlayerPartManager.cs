@@ -21,7 +21,7 @@ namespace _01.Scripts.Player.Components
         {
         }
 
-        public void GetBodyPart(PlayerPartSO data, int index)
+        public void GetPart(PlayerPartSO data, int index)
         {
             equippedParts[index] = data;
             ChangePart();

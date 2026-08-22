@@ -11,5 +11,10 @@ namespace _01.Scripts.GameManger.Components
         {
             HavingTrashes += value;
         }
+
+        public void UseTrash(int value)
+        {
+            HavingTrashes -= value;
+        }
     }
 }
