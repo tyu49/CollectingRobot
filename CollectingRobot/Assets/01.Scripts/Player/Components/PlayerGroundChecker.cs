@@ -17,10 +17,7 @@ namespace _01.Scripts.Player.Components
             _player = player;
         }
 
-        public bool Check()
-        {
-            return Physics2D.OverlapBox(Offset, size, 0f, target);
-        }
+        public bool Check() => Physics2D.OverlapBox(Offset, size, 0f, target);
 
         private void OnDrawGizmos()
         {

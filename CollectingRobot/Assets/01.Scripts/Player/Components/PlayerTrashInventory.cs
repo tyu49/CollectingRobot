@@ -6,6 +6,7 @@ namespace _01.Scripts.Player.Components
     {
         [SerializeField] private int maxCapacity;
         [field : SerializeField] public int CurrentCapacity { get; private set; }
+        [field : SerializeField] public bool IsGetTarget { get; private set; }
         private Player _player;
 
         public void Initialize(Player player)
@@ -21,6 +22,13 @@ namespace _01.Scripts.Player.Components
             CurrentCapacity++;
             if (CurrentCapacity >= maxCapacity)
                 CurrentCapacity = maxCapacity;
+        }
+
+        public int PuttTrash()
+        {
+            int value = CurrentCapacity;
+            CurrentCapacity = 0;
+            return value;
         }
     }
 }

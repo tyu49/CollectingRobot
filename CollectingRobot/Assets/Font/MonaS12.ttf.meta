@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: b5da9e4e5979e414882131c75e6c1e32
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - MonaS12
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d0fbed943fd08e1429eccc15b1e5ac9c, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

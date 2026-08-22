@@ -1,4 +1,5 @@
 ﻿using System;
+using _01.Scripts.SO;
 using UnityEngine;
 
 namespace _01.Scripts.Player.Components
@@ -10,8 +11,9 @@ namespace _01.Scripts.Player.Components
         [SerializeField]private float speed;
         [SerializeField]private float jetPackPower;
         [SerializeField]private float jetPackPowerLimit;
-        [SerializeField]private float jetPackBattery;
-        [SerializeField]private float jetPackMaxBattery;
+        [field : SerializeField]public float JetPackBattery { get; private set; }
+        [field : SerializeField]public float JetPackDefaultBattery{ get; private set; }
+        public float JetPackMaxBattery => JetPackDefaultBattery + _player.PartJetPack;
         [SerializeField] private ParticleSystem jetPackEffect;
         [SerializeField] private ParticleSystem movingDustEffect;
         private Rigidbody2D _rb;
@@ -23,6 +25,12 @@ namespace _01.Scripts.Player.Components
         {
             _player = player;
             _rb = GetComponentInParent<Rigidbody2D>();
+            _player.OnExitBase += ExitBase;
+        }
+
+        private void OnDestroy()
+        {
+            _player.OnExitBase -= ExitBase;
         }
 
         public void SetMovement(float direction)
@@ -32,7 +40,7 @@ namespace _01.Scripts.Player.Components
         public void SetJetPackState(bool state)
         {
             _jetPackState = state;
-            if(state && jetPackBattery > 0)
+            if(state && JetPackBattery > 0)
                 jetPackEffect.Play();
             else
                 jetPackEffect.Stop();
@@ -46,14 +54,22 @@ namespace _01.Scripts.Player.Components
         private void FixedUpdate()
         {
             _rb.linearVelocityX = _direction * speed;
-            if (_jetPackState && jetPackBattery > 0)
+            if (_jetPackState && JetPackBattery > 0)
             {
                 _rb.AddForceY(jetPackPower, ForceMode2D.Force);
-                jetPackBattery -= Time.fixedDeltaTime;
+                JetPackBattery -= Time.fixedDeltaTime;
                 if (_rb.linearVelocityY >= jetPackPowerLimit)
                     _rb.linearVelocityY = jetPackPowerLimit;
-                if(jetPackBattery <= 0)
+                if(JetPackBattery <= 0 && jetPackEffect.isPlaying == true)
                     jetPackEffect.Stop();
+            }
+            if (JetPackBattery <= 0 && _player.PartType.HasFlag(PartType.BatteryRecycle))
+            {
+                jetPackEffect.Play();
+                _player.UseBattery(Time.fixedDeltaTime);
+                _rb.AddForceY(jetPackPower, ForceMode2D.Force);
+                if (_rb.linearVelocityY >= jetPackPowerLimit)
+                    _rb.linearVelocityY = jetPackPowerLimit;
             }
 
             if (!_player.IsOnGround && movingDustEffect.isPlaying)
@@ -70,9 +86,9 @@ namespace _01.Scripts.Player.Components
             }
         }
 
-        private void EnterBase()
+        private void ExitBase()
         {
-            jetPackBattery = jetPackMaxBattery;
+            JetPackBattery = JetPackMaxBattery;
         }
     }
 }
